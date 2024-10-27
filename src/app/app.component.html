@@ -1,0 +1,97 @@
+
+<!--
+
+<h2>Wish text first item</h2>
+
+<div class="container"  *ngIf = "Items.length>0" >
+    <div>{{ Items[0].wishText }}</div>
+</div>
+
+
+
+<br>
+<br>
+<h2>Wish items...</h2>
+
+<div *ngFor = "let item of Items ">
+  {{item.wishText}}
+</div>
+
+ 
+
+
+
+
+
+
+
+<br><br>
+
+<h2>Wish items list ...</h2>
+  
+  <div *ngIf = "Items.length==0">
+      No items found
+  </div>
+ 
+  
+<div *ngIf = "Items.length>0">
+  <div class="container">
+    <ul class ="wish-list">
+      <li *ngFor="let item of Items">
+        <div class ="form-check">
+            <label class="form-check-label" *ngIf="item.isComplete"> 
+                        <input class="checkbox" type ="checkbox"  checked /> {{item.wishText}} 
+            </label>
+            <label class="form-check-label" *ngIf="!item.isComplete"> 
+              <input class="checkbox" type ="checkbox"   /> {{item.wishText}} 
+            </label>
+        </div>
+      </li> 
+    </ul>
+  </div>
+</div> 
+ 
+--> 
+
+<h2>Wish items using template</h2>
+
+
+<form name="myform" id="myform" >
+
+  <label for="wish">Wish Text</label><input type="text"  name="my_new_wish" [(ngModel)] ="newWishText"  >
+
+  <input type="submit" value ='Add Wish' (click)="$event.preventDefault(); addNewWish()" >
+
+</form>
+
+
+<br><br>
+
+<div *ngIf="Items.length==0; then noItems else showItems"></div>
+
+<ng-template #noItems>
+  There are no wishes to display
+</ng-template>
+
+<ng-template #showItems>
+  
+<div  >
+  <div class="container">
+    <ul class ="wish-list">
+      <li *ngFor="let item of Items; index as ii">
+        <div class ="form-check">
+            <label class="form-check-label" > 
+                        <input 
+                            class="checkbox" 
+                            type ="checkbox"  
+                            [checked] ="item.isComplete"  
+                            [attr.data-index] ="ii"   
+                            (click)="toggleItem(item)"  
+                        /> {{item.wishText}} 
+            </label> 
+        </div>
+      </li> 
+    </ul>
+  </div>
+</div>
+</ng-template>
