@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component , OnInit, input} from '@angular/core';
 import { WishItem } from './shared/models/wishItem';
-import { NgModule } from '@angular/core';
+import { WishListComponent } from './wish-list/wish-list.component';
+
 
 @Component({
   selector: 'app-root',
@@ -9,24 +10,39 @@ import { NgModule } from '@angular/core';
 })
 
 export class AppComponent {
+ 
   title = 'wishlist_standalone';
 
   newWishText ='';
 
-  Items : WishItem[] = [
- 
-    new WishItem('To learn angular'),
-    new WishItem("Get Coffee",true),
-    new WishItem("Get Skyline")
- 
-  ]
+  listFilter :String ="0";
 
-  addNewWish(){
-      this.Items.push(new WishItem(this.newWishText));
+   
+
+
+  updateFilter(value:any){
+    
+    if (value =='0'){
+      this.visibleItems = this.Wishes;
+    }
+    else if (value =='1'){
+      this.visibleItems = this.Wishes.filter(item=> item.isComplete);      
+    }
+    else  if (value =='2'){
+      this.visibleItems = this.Wishes.filter(item=> !item.isComplete);      
+    }
+
   }
 
-  toggleItem(i:WishItem) { 
-    i.isComplete = !i.isComplete;
-    console.log(i.wishText + " " + i.isComplete); 
+  visibleItems : WishItem[] = this.Wishes;
+
+  addNewWish(){
+      
+      this.Wishes.push(new WishItem(this.newWishText));
+      this.newWishText =""; //clear text
+  }
+
+  clearWishes(){
+      this.Wishes = [];
   }
 }
